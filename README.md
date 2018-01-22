@@ -37,7 +37,7 @@ function twentyseventeen_init() {
 }
 ```
 
-## Argumnets:
+## Arguments:
 `CX_Fonts_Manager` accepts an array of options with next structure:
 * `prefix`        - theme mod / option prefix
 * `type`          - options type for database - theme_mod or options

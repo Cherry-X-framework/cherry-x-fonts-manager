@@ -14,40 +14,22 @@ add_action( 'after_setup_theme', 'twentyseventeen_init', 0 );
 function twentyseventeen_init() {
 
 	new CX_Fonts_Manager( array(
-		'prefix'     => 'twentyseventeen',
-		'path'       => get_theme_file_path( 'framework/modules/customizer/' ),
-		'capability' => 'edit_theme_options',
-		'type'       => 'theme_mod',
-		'options'    => array(
-			'show_tagline' => array(
-				'title'    => esc_html__( 'Show tagline after logo', 'twentyseventeen' ),
-				'section'  => 'title_tagline',
-				'priority' => 60,
-				'default'  => true,
-				'field'    => 'checkbox',
-				'type'     => 'control',
+		'prefix'    => 'twentyseventeen',
+		'single'    => false,
+		'type'      => 'theme_mod',
+		'get_fonts' => false,
+		'options'   => array(
+			'body' => array(
+				'family'  => 'body_font_family',
+				'style'   => 'body_font_style',
+				'weight'  => 'body_font_weight',
+				'charset' => 'body_character_set',
 			),
-			'general_settings' => array(
-				'title'       => esc_html__( 'General Site settings', 'twentyseventeen' ),
-				'priority'    => 40,
-				'type'        => 'panel',
-			),
-			'logo_favicon' => array(
-				'title'       => esc_html__( 'Logo &amp; Favicon', 'twentyseventeen' ),
-				'priority'    => 25,
-				'panel'       => 'general_settings',
-				'type'        => 'section',
-			),
-			'header_logo_type' => array(
-				'title'   => esc_html__( 'Logo Type', 'twentyseventeen' ),
-				'section' => 'logo_favicon',
-				'default' => 'text',
-				'field'   => 'radio',
-				'choices' => array(
-					'image' => esc_html__( 'Image', 'twentyseventeen' ),
-					'text'  => esc_html__( 'Text', 'twentyseventeen' ),
-				),
-				'type' => 'control',
+			'h1' => array(
+				'family'  => 'h1_font_family',
+				'style'   => 'h1_font_style',
+				'weight'  => 'h1_font_weight',
+				'charset' => 'h1_character_set',
 			),
 		)
 	) );
@@ -56,14 +38,15 @@ function twentyseventeen_init() {
 ```
 
 ## Argumnets:
-`CX_Customizer` accepts an array of options with next structure:
+`CX_Fonts_Manager` accepts an array of options with next structure:
 * `prefix`        - theme mod / option prefix
-* `path`          - path to module file
-* `capability`    - user capability to restrict access for different user groups
 * `type`          - options type for database - theme_mod or options
-* `fonts_manager` - `CX_Fonts_Manager` instance to enqueue fonts
+* `single`        - Works only for options `type`. Defines how options are stored in database, if `true` - in single array, named `prefix`, if `false` - each option is separate field in DB.
+* `get_fonts`     - Callback that returns array of all available fonts in next format - 'CSS font-family value' => 'Font name'. This is required option.
 * `options`       - registered options array
 
-`options` is an associative array, key - is an option key for database. Each option in array must contain `type` property - control, section or panel (accordingly standard customizer methods). 
-Other properties are the same as for standard Customizer properties.
+`options` is an associative array of arrays, key - is fonts options group slug. Value - is array of pairs - font CSS option => font DB option.
+
+## Notes:
+If you are using `CX_Customizer` module, you can automatically init `CX_Fonts_Manager` from customizer instance - deatils [here](https://github.com/Cherry-X-framework/cherry-x-customizer)
 
